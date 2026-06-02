@@ -20,4 +20,6 @@ class User(Base):
     role = Column(Enum(UserRole), nullable=False)
 
     phone = Column(String(13))
+    status = Column(String(20), default="active")
+    
     is_verified = Column(Boolean, default=False)
