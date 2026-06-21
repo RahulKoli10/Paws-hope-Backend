@@ -1,5 +1,6 @@
-from sqlalchemy import Column, String, Boolean, Enum 
+from sqlalchemy import Column, String, Boolean, Enum, DateTime, func
 from sqlalchemy.dialects.postgresql import UUID
+from datetime import datetime
 import uuid
 import enum
 from app.db.database import Base
@@ -23,3 +24,7 @@ class User(Base):
     status = Column(String(20), default="active")
     
     is_verified = Column(Boolean, default=False)
+    created_at= Column(DateTime, default=datetime.utcnow) 
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    last_login = Column(DateTime, nullable=True)
+    is_deleted = Column(Boolean, default=False)
