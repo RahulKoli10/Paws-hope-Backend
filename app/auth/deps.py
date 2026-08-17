@@ -1,13 +1,15 @@
 from fastapi import Depends, HTTPException, status
 from jose import jwt 
+from jose.exceptions import JWTError
 from sqlalchemy.orm import Session
 from fastapi.security import HTTPBearer , HTTPAuthorizationCredentials
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 from app.db.database import get_db
 from app.models.user import User
 
-load_dotenv()
+load_dotenv(dotenv_path=Path(__file__).resolve().parents[2] / ".env")
 JWT_SECRET= os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 security = HTTPBearer()
