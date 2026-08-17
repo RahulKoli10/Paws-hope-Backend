@@ -15,6 +15,7 @@ def get_users(db: Session = Depends(get_db)):
 def get_me(user = Depends(get_current_user)):
     return {
         "id": str(user.id),
+        "name": user.name,
         "email": user.email,
         "role": user.role
     }

@@ -12,9 +12,9 @@ CREATE TYPE rescue_status_enum AS ENUM ('pending','in_progress','completed');
 CREATE TYPE adoption_status_enum AS ENUM ('pending','approved','rejected');
 CREATE TYPE support_status_enum AS ENUM ('active','fulfilled','cancelled');
 
----------------------------------------------------
+
 -- USERS
----------------------------------------------------
+
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(100) NOT NULL,
@@ -31,9 +31,9 @@ CREATE TABLE users (
     is_deleted BOOLEAN DEFAULT FALSE
 );
 
----------------------------------------------------
+
 -- VOLUNTEERS
----------------------------------------------------
+
 CREATE TABLE volunteer_profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID UNIQUE REFERENCES users(id) ON DELETE CASCADE,
@@ -57,9 +57,9 @@ CREATE TABLE volunteer_requests (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- TASKS
----------------------------------------------------
+
 CREATE TABLE tasks (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(150) NOT NULL,
@@ -72,9 +72,9 @@ CREATE TABLE tasks (
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- CONTENT (BLOGS / NEWS)
----------------------------------------------------
+
 CREATE TABLE blogs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(200) NOT NULL,
@@ -97,9 +97,9 @@ CREATE TABLE news (
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- ANIMALS (CORE TABLE)
----------------------------------------------------
+
 CREATE TABLE animals (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     animal_code VARCHAR(70) UNIQUE NOT NULL,
@@ -125,9 +125,9 @@ CREATE TABLE animals (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- VIRTUAL ADOPTION (TRANSACTIONS)
----------------------------------------------------
+
 CREATE TABLE virtual_adoption_requests (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     animal_id UUID REFERENCES animals(id) ON DELETE CASCADE,
@@ -152,9 +152,9 @@ CREATE TABLE virtual_adoption_requests (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- ADOPTION REQUESTS
----------------------------------------------------
+
 CREATE TABLE adoption_requests (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     animal_id UUID REFERENCES animals(id) ON DELETE CASCADE,
@@ -166,9 +166,9 @@ CREATE TABLE adoption_requests (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- DONATIONS
----------------------------------------------------
+
 CREATE TABLE donations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     donor_name VARCHAR(100) NOT NULL,
@@ -187,9 +187,9 @@ CREATE TABLE donations (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- RESCUE REPORTS
----------------------------------------------------
+
 CREATE TABLE rescue_reports (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(100),
@@ -201,9 +201,9 @@ CREATE TABLE rescue_reports (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- WISHLIST / SUPPORT
----------------------------------------------------
+
 CREATE TABLE wishlist_items (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(150) NOT NULL,
@@ -226,9 +226,9 @@ CREATE TABLE wishlist_items (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- DONATED ITEMS
----------------------------------------------------
+
 CREATE TABLE donated_items (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     donor_name VARCHAR(100),
@@ -241,9 +241,9 @@ CREATE TABLE donated_items (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- EVENTS
----------------------------------------------------
+
 CREATE TABLE events (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(150) NOT NULL,
@@ -255,9 +255,9 @@ CREATE TABLE events (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- EVENT REGISTRATIONS
----------------------------------------------------
+
 CREATE TABLE event_registrations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     event_id UUID REFERENCES events(id) ON DELETE CASCADE,
@@ -267,9 +267,9 @@ CREATE TABLE event_registrations (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
----------------------------------------------------
+
 -- INDEXES (PERFORMANCE)
----------------------------------------------------
+
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_tasks_assigned_to ON tasks(assigned_to);
 CREATE INDEX idx_blogs_status ON blogs(status);
