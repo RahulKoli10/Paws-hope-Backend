@@ -61,7 +61,7 @@ def register(user: UserCreate, db:Session= Depends(get_db)):
     db.add(refresh_token_record)
     db.commit()
     return {
-        "message": "User registered successfully",
+        "message": "User registered successfull",
         "access_token": access_token,
         "refresh_token": refresh_token,
         "token_type": "bearer",
