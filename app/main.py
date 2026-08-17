@@ -1,4 +1,11 @@
 import logging
+import sys
+from pathlib import Path
+
+_package_root = Path(__file__).resolve().parent.parent
+if str(_package_root) not in sys.path:
+    sys.path.insert(0, str(_package_root))
+
 from fastapi import FastAPI
 from app.db.database import Base, engine
 from app.models.user import User
