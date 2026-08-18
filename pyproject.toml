@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Paws-and-Hope"
+version = "0.1.0"
+requires-python = ">=3.13,<3.14"
+
+dependencies = [
+    "fastapi[standard]",
+    "sqlalchemy",
+    "python-dotenv",
+    "psycopg2-binary",
+    "alembic",
+    "email-validator",
+    "python-jose[cryptography]",
+    "passlib[bcrypt]",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.fastapi]
+entrypoint = "app.main:app"
