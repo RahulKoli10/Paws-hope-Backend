@@ -6,4 +6,4 @@ psycopg2-binary
 alembic
 email-validator
 python-jose[cryptography]
-passlib[bcrypt]
+pwdlib[argon2]

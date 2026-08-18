@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 
@@ -55,6 +55,7 @@ def register(user: UserCreate, db:Session= Depends(get_db)):
     refresh_token_record = RefreshToken(
         user_id=new_user.id,
         token=refresh_token,
+        device_name="registration",
         expires_at=datetime.utcnow() + timedelta(days=7)
     )
 
@@ -78,6 +79,7 @@ def register(user: UserCreate, db:Session= Depends(get_db)):
 @router.post("/login")
 def login(
     user: UserLogin,
+    request: Request,
     db: Session = Depends(get_db)
 ):
     db_user = (
@@ -109,6 +111,7 @@ def login(
 
     # Device Limit Check
     MAX_DEVICES = 3
+    device_name = user.device_name or request.headers.get("user-agent") or "unknown device"
 
     active_sessions = (
         db.query(RefreshToken)
@@ -149,7 +152,7 @@ def login(
     refresh_token_record = RefreshToken(
         user_id=db_user.id,
         token=refresh_token,
-        device_name=user.device_name,
+        device_name=device_name,
         expires_at=datetime.utcnow() + timedelta(days=7)
     )
 

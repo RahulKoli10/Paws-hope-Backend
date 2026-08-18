@@ -13,7 +13,7 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
-    device_name: str = Field(..., min_length=2, max_length=255)
+    device_name: str | None = Field(default=None, min_length=2, max_length=255)
 
 # Refresh Token
 class RefreshTokenRequest(BaseModel):
